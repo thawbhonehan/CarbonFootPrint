@@ -1,93 +1,75 @@
 import java.util.ArrayList;
 
 public class User {
-	
-	private String username;
-	private String usertype; 
-	private ArrayList<Double> carbonFootprintData;
-	
-	//constructor
-	
-	public  User (String username, String usertype){
-		
-		this.username = username;
-		this.usertype = usertype; 
-		this.carbonFootprintData = new ArrayList<>();
-		
-	}
-	
-	
-	public double CarbonCalulator(double carEmission, double energyEmission, double wasteEmission) {
-		
-		double totalfootprint = carEmission + energyEmission + wasteEmission; 
-		carbonFootprintData.add(totalfootprint);
-		System.out.println("Total calculated Carbon footprint: " +totalfootprint +"kg Co2");
-		
-		return totalfootprint;  
-	}
-	
-	public void showTips()
-	{
+    // Attributes
+    private String username;
+    private String userType;  // Either "public" or "admin"
+    private ArrayList<Double> footprintData;  // Stores user’s past carbon footprint data
+
+    // Constructor
+    public User(String username, String userType) {
+        this.username = username;
+        this.userType = userType;
+        this.footprintData = new ArrayList<>();
+    }
+
+    // Method to calculate carbon footprint based on user inputs
+    public double calculateFootprint(double transportEmissions, double electricityEmissions, double wasteEmissions) {
+        double totalFootprint = transportEmissions + electricityEmissions + wasteEmissions;
+        footprintData.add(totalFootprint);  // Save the calculated footprint
+        System.out.println("Carbon footprint calculated: " + totalFootprint + " kg CO2");
+        return totalFootprint;
+    }
+
+    // Method to display reduction tips
+    public void viewTips() {
         System.out.println("Carbon Footprint Reduction Tips:");
         System.out.println("1. Use public transportation or carpool whenever possible.");
         System.out.println("2. Switch to energy-efficient appliances.");
         System.out.println("3. Reduce, reuse, and recycle your waste.");
         System.out.println("4. Consider switching to renewable energy sources.");
         System.out.println("5. Minimize food waste by planning meals.");
-	}
-	
-	
-	public void progressTracker() {
-		System.out.println("Tracking Progress... ");
-		if(carbonFootprintData.isEmpty()) {
-			System.out.println("System could not found any data. Please calculate the footprint data first");
-			return; 
-		}
-		
-		for ( int i=0; i< carbonFootprintData.size(); i++)
-		{
-			System.out.println("Entry " + (i + 1) + ": " + carbonFootprintData.get(i) + " kg CO2");
-		}
-		
-		double newestfootprint = carbonFootprintData.get(carbonFootprintData.size()-1);
-		double initialfootprint = carbonFootprintData.get(0);
-		double reductions = initialfootprint - newestfootprint; 
-		
+    }
 
-			
-		
-	}
+    // Method to track and display user's footprint progress over time
+    public void trackProgress() {
+        System.out.println("Tracking Progress:");
+        if (footprintData.isEmpty()) {
+            System.out.println("No data available yet. Calculate your footprint to begin tracking progress.");
+            return;
+        }
+        
+        for (int i = 0; i < footprintData.size(); i++) {
+            System.out.println("Entry " + (i + 1) + ": " + footprintData.get(i) + " kg CO2");
+        }
+        
+        double latestFootprint = footprintData.get(footprintData.size() - 1);
+        double initialFootprint = footprintData.get(0);
+        double reduction = initialFootprint - latestFootprint;
+        
+        System.out.println("Initial footprint: " + initialFootprint + " kg CO2");
+        System.out.println("Latest footprint: " + latestFootprint + " kg CO2");
+        System.out.println("Total reduction: " + reduction + " kg CO2");
+    }
 
+    // Getters and setters
+    public String getUsername() {
+        return username;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public String getUserType() {
+        return userType;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
-
-	public String getUsertype() {
-		return usertype;
-	}
-
-
-	public void setUsertype(String usertype) {
-		this.usertype = usertype;
-	}
-
-
-	public ArrayList<Double> getCarbonFootprintData() {
-		return carbonFootprintData;
-	}
-
-
-	public void setCarbonFootprintData(ArrayList<Double> carbonFootprintData) {
-		this.carbonFootprintData = carbonFootprintData;
-	}
-	
-	
-
+    public ArrayList<Double> getFootprintData() {
+        return footprintData;
+    }
 }
